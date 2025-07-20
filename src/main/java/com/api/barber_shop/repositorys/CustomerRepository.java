@@ -13,6 +13,8 @@ public interface CustomerRepository extends JpaRepository<CustomerEntity, UUID> 
 
     Optional<CustomerEntity> findByEmailCustomer(String emailCustomer);
 
+    Optional<CustomerEntity> findByTelephoneCustomer(String telephoneCustomer);
+
     @Transactional
     void deleteByEmailCustomer(String emailCustomer);
 }
