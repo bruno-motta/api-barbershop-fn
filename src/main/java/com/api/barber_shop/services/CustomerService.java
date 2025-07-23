@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -61,6 +62,30 @@ public class CustomerService {
                 () -> new RuntimeException("ID não encontrado")
         );
         customerRepository.deleteById(idCustomer);
+    }
+
+    public CustomerResponseDto updateCustomer(UUID id, CustomerRequestDto requestDto){
+         CustomerEntity entityToUpdate = customerRepository.findById(id).orElseThrow(
+                 () -> new RuntimeException("Id não encontrado")
+         );
+
+         Optional<CustomerEntity> existingEmail = customerRepository.findByEmailCustomer(requestDto.emailCustomer());
+         if(existingEmail.isPresent() && !existingEmail.get().getId().equals(id)){
+             throw new RuntimeException("E-mail já cadastrado, tente novamente");
+         }
+
+         Optional<CustomerEntity> existingTelephone = customerRepository.findByTelephoneCustomer(requestDto.telephoneCustomer());
+        if (existingTelephone.isPresent() && !existingTelephone.get().getId().equals(id));
+
+        entityToUpdate.setNameCustomer(requestDto.nameCustomer());
+        entityToUpdate.setEmailCustomer(requestDto.emailCustomer());
+        entityToUpdate.setTelephoneCustomer(requestDto.telephoneCustomer());
+
+        CustomerEntity updated = customerRepository.save(entityToUpdate);
+        return CustomerMapper.toResponse(updated);
+
+
+
     }
 
 
