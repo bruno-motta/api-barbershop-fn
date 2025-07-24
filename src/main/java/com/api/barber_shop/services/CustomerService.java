@@ -12,81 +12,88 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+
 @RequiredArgsConstructor
 @Service
 public class CustomerService {
 
      private final CustomerRepository customerRepository;
 
-     //TODO: EXCEÇÕES ***
+    public CustomerResponseDto saveCustomer(CustomerRequestDto customerRequest){
+        if(customerRepository.findByEmailCustomer(customerRequest.emailCustomer()).isPresent()){
+            throw new RuntimeException("E-mail já cadastrado, tente outro!");
+        }
 
-     public CustomerResponseDto savedCustomer(CustomerRequestDto customerRequest){
-         if(customerRepository.findByEmailCustomer(customerRequest.emailCustomer()).isPresent()){
-             throw new RuntimeException("E-mail já cadastro, tente outro");
-         }
-         if(customerRepository.findByTelephoneCustomer(customerRequest.telephoneCustomer()).isPresent()){
-             throw new RuntimeException("Telefone já cadastrado, tente outro");
-         }
+        if(customerRepository.findByTelephoneCustomer(customerRequest.telephoneCustomer()).isPresent()){
+            throw new RuntimeException("Telefone já cadastro, tente outro!");
+        }
 
-         CustomerEntity entity = CustomerMapper.toEntity(customerRequest);
-         entity.setDateTimeResgistration(LocalDateTime.now());
-         CustomerEntity savedCustomerEntity = customerRepository.save(entity);
+        CustomerEntity entity = CustomerMapper.toEntity(customerRequest);
+        entity.setDateTimeResgistration(LocalDateTime.now());
+        CustomerEntity saveCustomer = customerRepository.save(entity);
 
-         return CustomerMapper.toResponse(savedCustomerEntity);
-
-     }
-
-     public CustomerResponseDto getCustomerEmail(String email){
-         CustomerEntity getEmail = customerRepository.findByEmailCustomer(email).orElseThrow(
-                 () -> new RuntimeException("E-mail não encontrado.")
-         );
-         return CustomerMapper.toResponse(getEmail);
-     }
-
-     public CustomerResponseDto getCustomerTelephone(String telephone){
-         CustomerEntity getTelephone = customerRepository.findByTelephoneCustomer(telephone).orElseThrow(
-                 () -> new RuntimeException("Telefone não encontrado.")
-         );
-         return CustomerMapper.toResponse(getTelephone);
-     }
-
-    public void deleteByEmail(String emailDelete){
-        CustomerEntity deleteEntityEmail = customerRepository.findByEmailCustomer(emailDelete).orElseThrow(
-                () -> new RuntimeException("Cliente com esse e-mail não existe!")
-        );
-        customerRepository.deleteByEmailCustomer(emailDelete);
+        return CustomerMapper.toResponse(saveCustomer);
     }
 
-    public void deleteById(UUID idCustomer){
-        CustomerEntity deleteEntityId = customerRepository.findById(idCustomer).orElseThrow(
+    public CustomerResponseDto getCustomerId(UUID id){
+        CustomerEntity getId = customerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("ID não encontrado")
         );
-        customerRepository.deleteById(idCustomer);
+
+        return CustomerMapper.toResponse(getId);
     }
 
-    public CustomerResponseDto updateCustomer(UUID id, CustomerRequestDto requestDto){
-         CustomerEntity entityToUpdate = customerRepository.findById(id).orElseThrow(
-                 () -> new RuntimeException("Id não encontrado")
-         );
+    public CustomerResponseDto getCustomerEmail(String email){
+        CustomerEntity getEmail = customerRepository.findByEmailCustomer(email).orElseThrow(
+                () -> new RuntimeException("E-mail não encontrado.")
+        );
 
-         Optional<CustomerEntity> existingEmail = customerRepository.findByEmailCustomer(requestDto.emailCustomer());
-         if(existingEmail.isPresent() && !existingEmail.get().getId().equals(id)){
-             throw new RuntimeException("E-mail já cadastrado, tente novamente");
-         }
+        return CustomerMapper.toResponse(getEmail);
+    }
 
-         Optional<CustomerEntity> existingTelephone = customerRepository.findByTelephoneCustomer(requestDto.telephoneCustomer());
-        if (existingTelephone.isPresent() && !existingTelephone.get().getId().equals(id));
+    public CustomerResponseDto getCustomerTelephone(String telephone){
+        CustomerEntity getTelephone = customerRepository.findByTelephoneCustomer(telephone).orElseThrow(
+                () -> new RuntimeException("Telefone já cadastrado.")
+        );
 
-        entityToUpdate.setNameCustomer(requestDto.nameCustomer());
-        entityToUpdate.setEmailCustomer(requestDto.emailCustomer());
-        entityToUpdate.setTelephoneCustomer(requestDto.telephoneCustomer());
-
-        CustomerEntity updated = customerRepository.save(entityToUpdate);
-        return CustomerMapper.toResponse(updated);
+        return CustomerMapper.toResponse(getTelephone);
+    }
 
 
+    public CustomerResponseDto updateCustomer(UUID id, CustomerRequestDto customerRequest){
+        CustomerEntity entity = customerRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("ID não encontrado.")
+        );
+
+        Optional<CustomerEntity> existingEmail = customerRepository.findByEmailCustomer(customerRequest.emailCustomer());
+        if (existingEmail.isPresent() && !existingEmail.get().getId().equals(id)){
+            throw new RuntimeException("E-mail já cadastrado.");
+        }
+
+        Optional<CustomerEntity> existingTelephone = customerRepository.findByTelephoneCustomer(customerRequest.telephoneCustomer());
+        if(existingTelephone.isPresent() && !existingTelephone.get().getId().equals(id)){
+            throw new RuntimeException("Telefone já cadastrado");
+        }
+
+        entity.setNameCustomer(customerRequest.nameCustomer());
+        entity.setEmailCustomer(customerRequest.emailCustomer());
+        entity.setTelephoneCustomer(customerRequest.telephoneCustomer());
+
+        CustomerEntity update = customerRepository.save(entity);
+        return CustomerMapper.toResponse(update);
 
     }
+
+    public void deteleCustomer(UUID id){
+        CustomerEntity deleteEntity = customerRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("ID não encontrado, não foi possivél deletar o usuario!")
+        );
+        customerRepository.deleteById(id);
+    }
+
+
+
+
 
 
 }
