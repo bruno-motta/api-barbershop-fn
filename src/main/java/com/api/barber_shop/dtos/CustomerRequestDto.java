@@ -10,7 +10,7 @@ public record CustomerRequestDto(
         String nameCustomer,
 
         @NotBlank(message = "O campo e-mail não pode ficar em branco!")
-        @Email
+        @Email(message = "Formato de email inválido.")
         String emailCustomer,
 
         @NotBlank(message = "O campo telefone não pode ficar em branco!")

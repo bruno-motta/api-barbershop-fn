@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public class CustomerMapper {
 
-    //Converter os dados convertidos na requisição HTTP, em um CustomerEntity
+
     public static CustomerEntity toEntity(CustomerRequestDto requestDto){
         return  new CustomerEntity(
                 null,
@@ -20,14 +20,11 @@ public class CustomerMapper {
         );
     }
 
-    //Converter a entidade CustomerEntity, em um CustomerResponseDto.
-    //(Que será devolvido via Json na resposta da api)
-
     public static CustomerResponseDto toResponse(CustomerEntity entity){
         return  new CustomerResponseDto(
                 entity.getId(),
                 entity.getNameCustomer(),
-                entity.getNameCustomer(),
+                entity.getEmailCustomer(),
                 entity.getTelephoneCustomer(),
                 entity.getDateTimeResgistration()
         );
