@@ -35,7 +35,7 @@ public class CustomerService {
         return CustomerMapper.toResponse(saveCustomer);
     }
 
-    public CustomerResponseDto getCustomerId(UUID id){
+    public CustomerResponseDto searchCustomerId(UUID id){
         CustomerEntity getId = customerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("ID não encontrado")
         );
@@ -43,7 +43,7 @@ public class CustomerService {
         return CustomerMapper.toResponse(getId);
     }
 
-    public CustomerResponseDto getCustomerEmail(String email){
+    public CustomerResponseDto searchCustomerEmail(String email){
         CustomerEntity getEmail = customerRepository.findByEmailCustomer(email).orElseThrow(
                 () -> new RuntimeException("E-mail não encontrado.")
         );
@@ -51,7 +51,7 @@ public class CustomerService {
         return CustomerMapper.toResponse(getEmail);
     }
 
-    public CustomerResponseDto getCustomerTelephone(String telephone){
+    public CustomerResponseDto searchCustomerTelephone(String telephone){
         CustomerEntity getTelephone = customerRepository.findByTelephoneCustomer(telephone).orElseThrow(
                 () -> new RuntimeException("Telefone já cadastrado.")
         );
