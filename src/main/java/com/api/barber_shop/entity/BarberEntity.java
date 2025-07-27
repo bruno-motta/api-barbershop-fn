@@ -26,6 +26,7 @@ public class BarberEntity {
     @Column(name = "specialty_barber")
     private String specialtyBarber;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "Active_barber")
     private ActiveBarber activeBarber;
 

@@ -11,7 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "customer")
+@Table(name = "customer")
+@Entity
 public class CustomerEntity {
 
     @Id
@@ -19,16 +20,16 @@ public class CustomerEntity {
     @Column(name = "customer_id", nullable = false)
     private UUID id;
 
-    @Column(name = "name_customer", nullable = false, length = 100)
+    @Column(name = "name_customer")
     private String nameCustomer;
 
-    @Column(name = "email_customer", nullable = false, length = 100)
+    @Column(name = "email_customer")
     private String emailCustomer;
 
-    @Column(name = "telephone_customer", nullable = false, length = 15)
+    @Column(name = "telephone_customer")
     private String telephoneCustomer;
 
-    @Column(name = "dataTimeRegistration", nullable = false)
+    @Column(name = "data_Time_Registration")
     private LocalDateTime dateTimeResgistration = LocalDateTime.now();
 
 
