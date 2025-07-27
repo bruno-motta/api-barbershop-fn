@@ -7,6 +7,7 @@ import com.api.barber_shop.entity.enums.ActiveBarber;
 
 public class BarberMapper {
 
+    //Todo: tt
     public static BarberEntity toEntity(BarberRequestDto requestDto){
         return new BarberEntity(
                 null,
