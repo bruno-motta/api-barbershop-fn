@@ -16,17 +16,17 @@ import java.util.UUID;
 public class BarberEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_barber", nullable = false)
     private UUID id;
 
-    @Column(name = "name_barber", nullable = false)
+    @Column(name = "name_barber")
     private String nameBarber;
 
-    @Column(name = "specialty_barber", nullable = false)
+    @Column(name = "specialty_barber")
     private String specialtyBarber;
 
-    @Column(name = "Active_barber", nullable = false)
+    @Column(name = "Active_barber")
     private ActiveBarber activeBarber;
 
 }
