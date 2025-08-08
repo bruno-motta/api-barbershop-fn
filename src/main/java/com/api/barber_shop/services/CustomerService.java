@@ -2,9 +2,9 @@ package com.api.barber_shop.services;
 
 import com.api.barber_shop.dtos.CustomerRequestDto;
 import com.api.barber_shop.dtos.CustomerResponseDto;
-import com.api.barber_shop.entity.CustomerEntity;
+import com.api.barber_shop.domain.entities.CustomerEntity;
 import com.api.barber_shop.mappers.CustomerMapper;
-import com.api.barber_shop.repositorys.CustomerRepository;
+import com.api.barber_shop.domain.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +36,11 @@ public class CustomerService {
     }
 
     public CustomerResponseDto searchCustomerId(UUID id){
-        CustomerEntity getId = customerRepository.findById(id).orElseThrow(
+        CustomerEntity searchId = customerRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("ID não encontrado")
         );
 
-        return CustomerMapper.toResponse(getId);
+        return CustomerMapper.toResponse(searchId);
     }
 
     public CustomerResponseDto searchCustomerEmail(String email){
