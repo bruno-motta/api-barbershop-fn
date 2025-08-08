@@ -77,6 +77,21 @@ public class BarberService {
         return dtoListSpecialty;
     }
 
+    public BarberResponseDto updateBarber(UUID id, BarberRequestDto requestDto){
+        BarberEntity entity = barberRepository.findById(id).orElseThrow(
+                () -> new RuntimeException("Id não encontrado")
+        );
+
+        entity.setNameBarber(requestDto.nameBarber());
+        entity.setSpecialtyBarber(requestDto.specialtyBarber());
+        entity.setActiveBarber(requestDto.activeBarber());
+
+        BarberEntity upBarber = barberRepository.save(entity);
+
+        return BarberMapper.toResponse(upBarber);
+    }
+
+
     public void deleteBarberId(UUID id){
         BarberEntity deleteIdBarber = barberRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Barbeiro não encontrado.")
