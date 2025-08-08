@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -30,6 +31,18 @@ public class BarberController {
         return ResponseEntity.ok(responseBarber);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BarberResponseDto> upadateBarber(@PathVariable UUID id,
+                                                           @RequestBody BarberRequestDto requestDto){
+        BarberResponseDto updateResponse=  barberService.updateBarber(id, requestDto);
+        return ResponseEntity.ok(updateResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBarberId(@PathVariable UUID id){
+        barberService.deleteBarberId(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 
