@@ -38,7 +38,6 @@ public class BarberController {
         return ResponseEntity.ok(updateResponse);
     }
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBarberId(@PathVariable UUID id){
         barberService.deleteBarberId(id);
