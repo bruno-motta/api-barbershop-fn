@@ -1,6 +1,6 @@
-package com.api.barber_shop.repositorys;
+package com.api.barber_shop.domain.repositories;
 
-import com.api.barber_shop.entity.CustomerEntity;
+import com.api.barber_shop.domain.entities.CustomerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

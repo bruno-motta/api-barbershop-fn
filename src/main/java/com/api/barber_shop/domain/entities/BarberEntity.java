@@ -1,6 +1,6 @@
-package com.api.barber_shop.entity;
+package com.api.barber_shop.domain.entities;
 
-import com.api.barber_shop.entity.enums.ActiveBarber;
+import com.api.barber_shop.domain.entities.enums.ActiveBarber;
 import jakarta.persistence.*;
 import lombok.*;
 
