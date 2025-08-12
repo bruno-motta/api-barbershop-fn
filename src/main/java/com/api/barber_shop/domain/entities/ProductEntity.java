@@ -18,18 +18,18 @@ public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_product", nullable = false)
-    private UUID idService;
+    private UUID idProduct;
 
     @Column(name = "name_product")
-    private String nameService;
+    private String nameProduct;
 
     @Column(name = "duration_min_product")
-    private Integer durationMinService;
+    private Integer durationMinProduct;
 
     @Column(name = "price_product")
-    private BigDecimal priceService;
+    private BigDecimal priceProduct;
 
     @Column(name = "active_product")
-    private Boolean activeService;
+    private Boolean activeProcuct;
 }
 
